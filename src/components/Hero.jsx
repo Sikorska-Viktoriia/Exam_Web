@@ -11,13 +11,13 @@ export default function Hero({ onMenuClick, onContactClick }) {
       <div className="absolute top-6 left-6 flex flex-col space-y-4 z-50">
         <button
           onClick={onMenuClick}
-          className="bg-black text-white px-6 py-3 text-lg font-bold uppercase"
+          className="bg-black text-white px-10 py-3 text-lg  uppercase"
         >
           Menu
         </button>
         <button
           onClick={onContactClick}
-          className="bg-black text-white px-6 py-3 text-lg font-bold uppercase"
+          className="bg-black text-white px-6 py-3 text-lg  uppercase"
         >
           Contact
         </button>

@@ -1,7 +1,12 @@
 import { useState } from "react";
 
 export default function Contact({ onSubmit }) {
-  const [form, setForm] = useState({ name: "", people: "", date: "", message: "" });
+  const [form, setForm] = useState({
+    name: "",
+    people: "",
+    date: "",
+    message: ""
+  });
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
@@ -19,13 +24,20 @@ export default function Contact({ onSubmit }) {
   };
 
   return (
-    <section className="p-6">
-      <h2 className="text-2xl font-semibold mb-4">Contact</h2>
-      {submitted && <p className="text-green-600 mb-4">Message sent successfully!</p>}
-      <form className="space-y-4 max-w-md" onSubmit={handleSubmit}>
+    <section>
+      {/* Підзаголовок */}
+      <p className="text-gray-600 mb-6 text-sm">
+        Reserve a table, ask for today's special or just send us a message:
+      </p>
+
+      {submitted && (
+        <p className="text-green-600 mb-4">Message sent successfully!</p>
+      )}
+
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <input
           name="name"
-          className="w-full border px-4 py-2"
+          className="w-full border border-gray-300 px-4 py-2 rounded"
           type="text"
           placeholder="Name"
           value={form.name}
@@ -34,7 +46,7 @@ export default function Contact({ onSubmit }) {
         />
         <input
           name="people"
-          className="w-full border px-4 py-2"
+          className="w-full border border-gray-300 px-4 py-2 rounded"
           type="number"
           placeholder="How many people"
           value={form.people}
@@ -44,7 +56,7 @@ export default function Contact({ onSubmit }) {
         />
         <input
           name="date"
-          className="w-full border px-4 py-2"
+          className="w-full border border-gray-300 px-4 py-2 rounded"
           type="datetime-local"
           value={form.date}
           onChange={handleChange}
@@ -52,12 +64,16 @@ export default function Contact({ onSubmit }) {
         />
         <textarea
           name="message"
-          className="w-full border px-4 py-2"
+          className="w-full border border-gray-300 px-4 py-2 rounded"
           placeholder="Message / Special requirements"
           value={form.message}
           onChange={handleChange}
         ></textarea>
-        <button type="submit" className="bg-black text-white px-4 py-2">
+
+        <button
+          type="submit"
+          className="bg-white text-black px-4 py-2 rounded hover:bg-gray-100 transition duration-200"
+        >
           SEND MESSAGE
         </button>
       </form>
