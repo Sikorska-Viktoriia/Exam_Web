@@ -10,22 +10,20 @@ export default function MenuModal({ isOpen, onClose }) {
       onRequestClose={onClose}
       contentLabel="Menu"
       overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-      className="bg-white p-6 rounded max-w-4xl w-full relative shadow-lg max-h-[80vh] overflow-auto"
+      className="bg-white p-6 rounded max-w-4xl w-full relative shadow-lg max-h-[80vh] overflow-auto animate-zoomIn"
     >
       {/* Кнопка закриття */}
       <button
-  onClick={onClose}
-  aria-label="Close menu modal"
-  className="absolute top-2 right-2 bg-transparent text-white text-xl p-2 hover:bg-gray-300 hover:text-black transition-colors duration-200"
-  style={{ lineHeight: 1 }}
->
-  ✖
-</button>
-
-
+        onClick={onClose}
+        aria-label="Close menu modal"
+        className="absolute top-2 right-2 bg-transparent text-white text-xl p-2 hover:bg-gray-300 hover:text-black transition-colors duration-200"
+        style={{ lineHeight: 1 }}
+      >
+        ✖
+      </button>
 
       {/* Меню */}
-      <div className="space-y-3"> {/* Зменшив відступ між категоріями */}
+      <div className="space-y-3">
         {Object.entries(menuData).map(([category, items], index) => (
           <div key={category}>
             {/* Чорна смуга-заголовок категорії */}
@@ -40,7 +38,7 @@ export default function MenuModal({ isOpen, onClose }) {
             </h2>
 
             {/* Список страв */}
-            <ul className="mt-1 mb-0 pl-0"> {/* Прибрав нижній margin */}
+            <ul className="mt-1 mb-0 pl-0">
               {items.map((item, idx) => (
                 <li
                   key={idx}
