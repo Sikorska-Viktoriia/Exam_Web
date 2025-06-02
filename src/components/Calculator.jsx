@@ -25,6 +25,8 @@ export default function AdvancedCalculator({ show, onClose }) {
   }, [input]);
 
   useEffect(() => {
+    if (!show) return;
+
     const handleKey = (e) => {
       if (/[0-9+\-*/.^()]/.test(e.key)) {
         setInput((prev) => prev + e.key);
@@ -37,11 +39,10 @@ export default function AdvancedCalculator({ show, onClose }) {
         setInput("");
       }
     };
+
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, [calculateResult]);
-
-  if (!show) return null;
+  }, [calculateResult, show]);
 
   const handleClick = (value) => {
     if (value === "=") {
@@ -68,62 +69,74 @@ export default function AdvancedCalculator({ show, onClose }) {
   const wrapperClass = darkMode ? "bg-gray-900 text-white" : "bg-white text-black";
   const inputClass = darkMode ? "bg-gray-800 text-white" : "bg-gray-100 text-black";
 
+  if (!show) return null;
+
   return (
-    // Ось тут убрали фон bg-black bg-opacity-60
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className={`p-6 rounded-xl shadow-lg max-w-sm w-full relative ${wrapperClass} animate-zoomIn`}>
+    <div
+      className={`p-4 sm:p-6 ${wrapperClass} flex flex-col max-h-screen`}
+      style={{ overflowY: "auto" }}
+    >
+      <header className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl sm:text-3xl font-bold select-none">~ Calculator ~</h2>
         <button
-          onClick={onClose}
-          className="absolute top-2 right-2 bg-transparent text-white text-xl p-2 hover:bg-gray-300 hover:text-black transition-colors duration-200"
-          aria-label="Close calculator"
+          onClick={() => {
+            onClose();
+            setInput("");
+            setHistory([]);
+          }}
+          className="bg-red-600 text-white px-3 sm:px-4 py-2 rounded hover:bg-red-700 transition text-sm sm:text-base"
         >
-          ✖
+          Повернутися на головну
         </button>
-        <h2 className="text-2xl font-bold mb-4">~ Calculator ~</h2>
-        <div className="flex justify-between items-center mb-2">
-          <label className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              checked={darkMode}
-              onChange={() => setDarkMode(!darkMode)}
-            />
-            Dark Mode
-          </label>
-        </div>
+      </header>
+
+      <label className="flex items-center gap-2 sm:gap-3 mb-4 select-none text-sm sm:text-base">
         <input
-          type="text"
-          value={input}
-          readOnly
-          className={`w-full p-3 border text-right text-xl rounded mb-4 ${inputClass}`}
+          type="checkbox"
+          checked={darkMode}
+          onChange={() => setDarkMode(!darkMode)}
+          className="cursor-pointer"
         />
-        <div className="grid grid-cols-4 gap-3 mb-4">
-          {buttons.map((btn) => (
-            <button
-              key={btn}
-              onClick={() => handleClick(btn)}
-              className={`p-3 text-lg rounded font-semibold transition ${
+        Dark Mode
+      </label>
+
+      <input
+        type="text"
+        value={input}
+        readOnly
+        className={`w-full p-3 sm:p-4 border rounded mb-6 text-right text-xl sm:text-2xl font-mono ${inputClass} select-text`}
+      />
+
+      <div className="grid grid-cols-4 sm:grid-cols-4 gap-2 sm:gap-3 mb-6 flex-grow overflow-auto max-h-[50vh] sm:max-h-[60vh]">
+        {buttons.map((btn) => (
+          <button
+            key={btn}
+            onClick={() => handleClick(btn)}
+            className={`p-3 sm:p-4 text-lg sm:text-xl rounded font-semibold transition select-none whitespace-nowrap
+              ${
                 btn === "="
-                  ? "bg-blue-400 text-white hover:bg-blue-900"
+                  ? "bg-blue-500 text-white hover:bg-blue-700"
                   : btn === "AC"
-                  ? "bg-blue-400 text-white hover:bg-blue-900 col-span-4"
+                  ? "bg-blue-500 text-white hover:bg-blue-700 col-span-4 sm:col-auto w-full sm:w-auto"
                   : darkMode
                   ? "bg-gray-700 hover:bg-gray-600"
                   : "bg-gray-200 hover:bg-gray-300"
-              }`}
-            >
-              {btn}
-            </button>
-          ))}
-        </div>
-        <div className="max-h-40 overflow-y-auto border-t pt-2">
-          <h3 className="text-lg font-semibold mb-1">History</h3>
-          <ul className="text-sm list-disc pl-5">
-            {history.slice().reverse().map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-        </div>
+              }
+            `}
+          >
+            {btn}
+          </button>
+        ))}
       </div>
+
+      <section className="max-h-40 sm:max-h-48 overflow-y-auto border-t pt-3">
+        <h3 className="text-lg sm:text-xl font-semibold mb-2 select-none">History</h3>
+        <ul className="text-xs sm:text-sm list-disc pl-5 space-y-1">
+          {history.slice().reverse().map((item, index) => (
+            <li key={index} className="break-words whitespace-pre-wrap">{item}</li>
+          ))}
+        </ul>
+      </section>
     </div>
   );
 }

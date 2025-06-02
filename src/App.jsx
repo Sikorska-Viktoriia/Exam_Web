@@ -5,7 +5,7 @@ import MenuModal from "./components/MenuModal.jsx";
 import ContactModal from "./components/ContactModal.jsx";
 import Confirmation from "./components/Confirmation.jsx";
 
-// Обгортка для головного інтерфейсу
+
 function Home() {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isContactOpen, setContactOpen] = useState(false);
@@ -24,7 +24,7 @@ function Home() {
   const handleContactSubmit = (formData) => {
     localStorage.setItem("lastBooking", JSON.stringify(formData));
     setContactOpen(false);
-    // Перехід на сторінку підтвердження
+   
     setTimeout(() => {
       navigate("/confirmation");
     }, 100);
@@ -43,7 +43,7 @@ function Home() {
   );
 }
 
-// Компонент App з маршрутизацією
+
 export default function App() {
   return (
     <Router>
